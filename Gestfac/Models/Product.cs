@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Gestfac.Models
@@ -15,7 +16,7 @@ namespace Gestfac.Models
         public double CurrentPrice { get; set; }
 
         public List<string> Tags { get; set; }
-        public IEnumerable<PriceUpdate> PriceUpdates { get; set; }
+        public List<PriceUpdate> PriceUpdates { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -39,6 +40,12 @@ namespace Gestfac.Models
         public override int GetHashCode()
         {
             return ExternalId.GetHashCode();
+        }
+
+        public void UpdatePrice(double currentPrice)
+        {
+            CurrentPrice = currentPrice;
+            PriceUpdates.Add(new PriceUpdate() { Date = DateTime.Now, Price = currentPrice });
         }
     }
 }
