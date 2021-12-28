@@ -23,10 +23,7 @@
                 Margin="0 5 0 0"
                 Text=""
             />
-        <ListView Grid.Row="2" Margin="0 25 0 0">
-            <ListViewItem/>
-            <ListViewItem/>
-            <ListViewItem/>
+        <ListView Grid.Row="2" Margin="0 25 0 0" ItemsSource="{Binding Products}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem" >
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -37,21 +34,21 @@
                     <GridViewColumn Header="Codigo">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Text="AAA111"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding ExternalId}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Descripcion">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Padding="0 0 20 0" Text="Tornillo"/>
+                                <TextBlock Padding="0 0 20 0" Text="{Binding Description}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Precio">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Padding="0 0 20 0" Text="23.11"/>
+                                <TextBlock Padding="0 0 20 0" Text="{Binding Price}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

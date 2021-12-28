@@ -33,7 +33,7 @@
             <TextBox
                 Grid.Row="1"
                 Margin="0 5 0 0"
-                Text=""
+                Text="{Binding ExternalId}"
             />
         </Grid>
         <Grid 
@@ -48,7 +48,7 @@
             <TextBox
                 Grid.Row="1"
                 Margin="0 5 0 0"
-                Text=""
+                Text="{Binding Description}"
             />
         </Grid>
         <Grid 
@@ -63,15 +63,15 @@
             <TextBox
                 Grid.Row="1"
                 Margin="0 5 0 0"
-                Text=""
+                Text="{Binding Tags}"
             />
         </Grid>
         <StackPanel 
             Grid.Row="4"
             Orientation="Horizontal"
              Margin="0 25 0 0">
-            <Button Content="Grabar"/>
-            <Button Content="Cancelar" Margin="5 0 0 0 "/>
+            <Button Content="Grabar" Command="{Binding SubmitCommand}"/>
+            <Button Content="Cancelar" Command="{Binding CancelCommand}" Margin="5 0 0 0 "/>
         </StackPanel>
     </Grid>
 </UserControl>

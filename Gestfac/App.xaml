@@ -1,8 +1,7 @@
 ﻿<Application x:Class="Gestfac.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Gestfac"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:Gestfac">
     <Application.Resources>
         <Style TargetType="Button">
             <Setter Property="Padding" Value="10 5"/>

@@ -10,7 +10,7 @@
         Width="800"
         FontSize="14">
     <Grid MaxWidth="600" Margin="20 10">
-        <views:ProductListingView/>
+        <views:AddProductView  DataContext="{Binding CurrentViewModel}"/>
 
     </Grid>
 </Window>
