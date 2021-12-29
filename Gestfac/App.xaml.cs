@@ -22,7 +22,6 @@ namespace Gestfac
             {
                 DataContext = new MainViewModel()
             };
-            
             MainWindow.Show();
 
             base.OnStartup(e);
