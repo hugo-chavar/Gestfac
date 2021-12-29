@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gestfac.Commands;
+using Gestfac.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,5 +68,11 @@ namespace Gestfac.ViewModels
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
+
+        public AddProductViewModel(Catalog catalog)
+        {
+            SubmitCommand = new AddProductCommand(this, catalog);
+            CancelCommand = new CancelAddProductCommand();
+        }
     }
 }

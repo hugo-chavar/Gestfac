@@ -16,11 +16,18 @@ namespace Gestfac
     /// </summary>
     public partial class App : Application
     {
+        private readonly Catalog catalog;
+
+        public App()
+        {
+            catalog = new Catalog();
+        }
+        
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(catalog)
             };
             MainWindow.Show();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gestfac.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace Gestfac.ViewModels
     {
         public ViewModelBase CurrentViewModel { get; }
 
-        public MainViewModel()
+        public MainViewModel(Catalog catalog)
         {
-            CurrentViewModel = new ProductListingViewModel();
+            CurrentViewModel = new AddProductViewModel(catalog);
         }
     }
 }
