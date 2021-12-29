@@ -33,7 +33,7 @@
                 Grid.Column="1"
                 Margin="5 5 0 0"
                 Content="Buscar"
-                Command="{Binding FindProductsCommand}"
+                Command="{Binding FindCommand}"
                 />
         </Grid>
 

@@ -13,7 +13,7 @@ namespace Gestfac.ViewModels
 
         public MainViewModel(Catalog catalog)
         {
-            CurrentViewModel = new AddProductViewModel(catalog);
+            CurrentViewModel = new ProductListingViewModel(catalog);
         }
     }
 }

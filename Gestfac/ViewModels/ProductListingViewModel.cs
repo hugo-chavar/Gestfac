@@ -1,4 +1,5 @@
-﻿using Gestfac.Models;
+﻿using Gestfac.Commands;
+using Gestfac.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ namespace Gestfac.ViewModels
     public class ProductListingViewModel : ViewModelBase
     {
         private readonly ObservableCollection<ProductViewModel> _products;
+        private readonly Catalog _catalog;
 
         private string _searchText;
         public string SearchText
@@ -28,10 +30,12 @@ namespace Gestfac.ViewModels
         }
 
         public IEnumerable<ProductViewModel> Products => _products;
-        public ICommand FindProductsCommand { get; }
+        public ICommand FindCommand { get; }
 
-        public ProductListingViewModel()
+        public ProductListingViewModel(Catalog catalog)
         {
+            _catalog = catalog;
+            FindCommand = new FindProductsCommand(catalog, this);
             _products = new ObservableCollection<ProductViewModel>();
 
             //TODO: hardcoded values
