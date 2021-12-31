@@ -1,5 +1,6 @@
 ﻿using Gestfac.Exceptions;
 using Gestfac.Models;
+using Gestfac.Services;
 using Gestfac.Stores;
 using Gestfac.ViewModels;
 using System;
@@ -41,12 +42,12 @@ namespace Gestfac
 
         private AddProductViewModel CreateAddProductViewModel()
         {
-            return new AddProductViewModel(catalog, _navigationStore, CreateProductListingViewModel);
+            return new AddProductViewModel(catalog, new NavigationService(_navigationStore, CreateProductListingViewModel));
         }
 
         private ProductListingViewModel CreateProductListingViewModel()
         {
-            return new ProductListingViewModel(catalog, _navigationStore, CreateAddProductViewModel);
+            return new ProductListingViewModel(catalog, new NavigationService(_navigationStore, CreateAddProductViewModel));
         }
     }
 }

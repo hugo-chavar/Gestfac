@@ -1,5 +1,6 @@
 ﻿using Gestfac.Commands;
 using Gestfac.Models;
+using Gestfac.Services;
 using Gestfac.Stores;
 using System;
 using System.Collections.Generic;
@@ -70,10 +71,10 @@ namespace Gestfac.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public AddProductViewModel(Catalog catalog, NavigationStore navigationStore, Func<ProductListingViewModel> createProductListingViewModel)
+        public AddProductViewModel(Catalog catalog, NavigationService addProductViewNavigationService)
         {
-            SubmitCommand = new AddProductCommand(this, catalog);
-            CancelCommand = new NavigateCommand(navigationStore, createProductListingViewModel);
+            SubmitCommand = new AddProductCommand(this, catalog, addProductViewNavigationService);
+            CancelCommand = new NavigateCommand(addProductViewNavigationService);
         }
     }
 }

@@ -35,11 +35,11 @@ namespace Gestfac.ViewModels
 
         public ICommand NewProductCommand { get; }
 
-        public ProductListingViewModel(Catalog catalog, NavigationStore navigationStore, Func<AddProductViewModel> createAddProductViewModel)
+        public ProductListingViewModel(Catalog catalog, Services.NavigationService addProductViewNavigationService)
         {
             _catalog = catalog;
             FindCommand = new FindProductsCommand(catalog, this);
-            NewProductCommand = new NavigateCommand(navigationStore, createAddProductViewModel);
+            NewProductCommand = new NavigateCommand(addProductViewNavigationService);
             _products = new ObservableCollection<ProductViewModel>();
 
             //TODO: hardcoded values

@@ -1,5 +1,6 @@
 ﻿using Gestfac.Exceptions;
 using Gestfac.Models;
+using Gestfac.Services;
 using Gestfac.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace Gestfac.Commands
     {
         private readonly Catalog catalog;
         private readonly AddProductViewModel addProductViewModel;
+        private readonly NavigationService addProductViewNavigationService;
 
-        public AddProductCommand(AddProductViewModel addProductViewModel, Catalog catalog)
+        public AddProductCommand(AddProductViewModel addProductViewModel, Catalog catalog, NavigationService navigationService)
         {
             this.catalog = catalog;
             this.addProductViewModel = addProductViewModel;
+            this.addProductViewNavigationService = navigationService;
             this.addProductViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -45,6 +48,8 @@ namespace Gestfac.Commands
             {
                 catalog.AddProduct(product);
                 MessageBox.Show("Producto agregado correctamente", "Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                addProductViewNavigationService.Navigate();
             }
             catch (ExistingProductException)
             {
