@@ -28,7 +28,7 @@ namespace Gestfac
         
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = new ProductListingViewModel(catalog, _navigationStore);
+            _navigationStore.CurrentViewModel = CreateProductListingViewModel();
 
             MainWindow = new MainWindow()
             {
@@ -37,6 +37,16 @@ namespace Gestfac
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        private AddProductViewModel CreateAddProductViewModel()
+        {
+            return new AddProductViewModel(catalog, _navigationStore, CreateProductListingViewModel);
+        }
+
+        private ProductListingViewModel CreateProductListingViewModel()
+        {
+            return new ProductListingViewModel(catalog, _navigationStore, CreateAddProductViewModel);
         }
     }
 }
