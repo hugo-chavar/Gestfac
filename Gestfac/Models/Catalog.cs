@@ -52,5 +52,10 @@ namespace Gestfac.Models
 
             }
         }
+
+        public IEnumerable<Product> GetAllProducts()
+        {
+            return _products;
+        }
     }
 }

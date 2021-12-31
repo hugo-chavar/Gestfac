@@ -42,11 +42,16 @@ namespace Gestfac.ViewModels
             NewProductCommand = new NavigateCommand(addProductViewNavigationService);
             _products = new ObservableCollection<ProductViewModel>();
 
-            //TODO: hardcoded values
-            _products.Add(new ProductViewModel(new Product() { ExternalId = "AABB11", Description = "DISYUNTOR 2 X 40 SUPER INMUNIZADO ", CurrentPrice = 22.55 }));
-            _products.Add(new ProductViewModel(new Product() { ExternalId = "BBBB22", Description = "CAÑO ESTRUCTURAL 60 X 40 X 1,6 mm ", CurrentPrice = 17.05 }));
-            _products.Add(new ProductViewModel(new Product() { ExternalId = "CCBB11", Description = "BALASTO PARA LAMPARA DE MERCURIO HALOGENADO 400W ", CurrentPrice = 5.50 }));
+            UpdateProducts();
         }
 
+        private void UpdateProducts()
+        {
+            foreach (var product in _catalog.GetAllProducts())
+            {
+                ProductViewModel productViewModel = new ProductViewModel(product);
+                _products.Add(productViewModel);
+            }
+        }
     }
 }
