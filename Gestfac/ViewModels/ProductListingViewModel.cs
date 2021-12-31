@@ -1,5 +1,6 @@
 ﻿using Gestfac.Commands;
 using Gestfac.Models;
+using Gestfac.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,10 +35,11 @@ namespace Gestfac.ViewModels
 
         public ICommand NewProductCommand { get; }
 
-        public ProductListingViewModel(Catalog catalog)
+        public ProductListingViewModel(Catalog catalog, NavigationStore navigationStore)
         {
             _catalog = catalog;
             FindCommand = new FindProductsCommand(catalog, this);
+            NewProductCommand = new NavigateCommand(navigationStore);
             _products = new ObservableCollection<ProductViewModel>();
 
             //TODO: hardcoded values
