@@ -46,7 +46,7 @@ namespace Gestfac.Commands
                 catalog.AddProduct(product);
                 MessageBox.Show("Producto agregado correctamente", "Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (ExistingProductException ex)
+            catch (ExistingProductException)
             {
 
                 MessageBox.Show("Producto ya existe", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -11,6 +11,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock 
@@ -69,6 +70,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        
+        <Button 
+                Grid.Row="3"
+                Margin="0 5 0 0"
+                Content="Nuevo Producto"
+                Command="{Binding NewProductCommand}"
+                />
         
     </Grid>
     

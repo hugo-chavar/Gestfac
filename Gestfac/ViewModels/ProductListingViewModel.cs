@@ -32,6 +32,8 @@ namespace Gestfac.ViewModels
         public IEnumerable<ProductViewModel> Products => _products;
         public ICommand FindCommand { get; }
 
+        public ICommand NewProductCommand { get; }
+
         public ProductListingViewModel(Catalog catalog)
         {
             _catalog = catalog;

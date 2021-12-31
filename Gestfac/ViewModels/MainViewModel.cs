@@ -1,4 +1,5 @@
 ﻿using Gestfac.Models;
+using Gestfac.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,14 @@ namespace Gestfac.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public ViewModelBase CurrentViewModel { get; }
+        private readonly NavigationStore _navigationStore;
 
-        public MainViewModel(Catalog catalog)
+        public MainViewModel(NavigationStore navigationStore)
         {
-            CurrentViewModel = new ProductListingViewModel(catalog);
+            _navigationStore = navigationStore;
         }
+
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+
     }
 }

@@ -3,14 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gestfac" xmlns:views="clr-namespace:Gestfac.Views"
+        xmlns:local="clr-namespace:Gestfac" 
+        xmlns:views="clr-namespace:Gestfac.Views"
+        xmlns:vms="clr-namespace:Gestfac.ViewModels"
         mc:Ignorable="d"
         Title="Productos"
         Height="450"
         Width="800"
         FontSize="14">
     <Grid MaxWidth="600" Margin="20 10">
-        <views:ProductListingView  DataContext="{Binding CurrentViewModel}"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:AddProductViewModel}">
+                <views:AddProductView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ProductListingViewModel}">
+                <views:ProductListingView />
+            </DataTemplate>
+        </Grid.Resources>
+        
+        <ContentControl  Content="{Binding CurrentViewModel}"/>
 
     </Grid>
 </Window>

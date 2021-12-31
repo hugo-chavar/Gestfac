@@ -1,5 +1,6 @@
 ﻿using Gestfac.Exceptions;
 using Gestfac.Models;
+using Gestfac.Stores;
 using Gestfac.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -17,17 +18,21 @@ namespace Gestfac
     public partial class App : Application
     {
         private readonly Catalog catalog;
+        private readonly NavigationStore _navigationStore;
 
         public App()
         {
             catalog = new Catalog();
+            _navigationStore = new NavigationStore();
         }
         
         protected override void OnStartup(StartupEventArgs e)
         {
+            _navigationStore.CurrentViewModel = new ProductListingViewModel(catalog);
+
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(catalog)
+                DataContext = new MainViewModel(_navigationStore)
             };
             MainWindow.Show();
 
