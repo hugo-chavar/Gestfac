@@ -1,8 +1,14 @@
-﻿using Gestfac.Exceptions;
+﻿using Gestfac.DbContexts;
+using Gestfac.Exceptions;
 using Gestfac.Models;
 using Gestfac.Services;
+using Gestfac.Services.Creators;
+using Gestfac.Services.Creators.ProductCreators;
+using Gestfac.Services.Providers;
+using Gestfac.Services.Providers.ProductProviders;
 using Gestfac.Stores;
 using Gestfac.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,17 +24,27 @@ namespace Gestfac
     /// </summary>
     public partial class App : Application
     {
+        private const string ConnectionString = "Data source=gestfac.db";
         private readonly Catalog catalog;
         private readonly NavigationStore _navigationStore;
+        private readonly GestfacDbContextFactory _dbContextFactory;
 
         public App()
         {
-            catalog = new Catalog();
+            _dbContextFactory = new GestfacDbContextFactory(ConnectionString);
+            IProvider<Product> productProvider = new DatabaseProductProvider(_dbContextFactory);
+            ICreator<Product> productCreator = new DatabaseProductCreator(_dbContextFactory);
+            catalog = new Catalog(productProvider, productCreator);
             _navigationStore = new NavigationStore();
         }
         
         protected override void OnStartup(StartupEventArgs e)
         {
+            using (GestfacDbContext dbContext = _dbContextFactory.CreateDbContext())
+            {
+                dbContext.Database.Migrate();
+            }
+
             _navigationStore.CurrentViewModel = CreateProductListingViewModel();
 
             MainWindow = new MainWindow()
@@ -36,7 +52,7 @@ namespace Gestfac
                 DataContext = new MainViewModel(_navigationStore)
             };
             MainWindow.Show();
-
+             
             base.OnStartup(e);
         }
 
@@ -47,7 +63,7 @@ namespace Gestfac
 
         private ProductListingViewModel CreateProductListingViewModel()
         {
-            return new ProductListingViewModel(catalog, new NavigationService(_navigationStore, CreateAddProductViewModel));
+            return ProductListingViewModel.LoadViewModel(catalog, new NavigationService(_navigationStore, CreateAddProductViewModel));
         }
     }
 }

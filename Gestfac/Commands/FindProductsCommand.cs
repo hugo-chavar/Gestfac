@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Gestfac.Commands
 {
-    public class FindProductsCommand : CommandBase
+    public class FindProductsCommand : AsyncCommandBase
     {
         private readonly Catalog catalog;
         private readonly ProductListingViewModel productListingViewModel;
@@ -30,7 +30,7 @@ namespace Gestfac.Commands
                 base.CanExecute(parameter);
         }
 
-        public override void Execute(object parameter)
+        public override Task ExecuteAsync(object parameter)
         {
             throw new NotImplementedException();
         }

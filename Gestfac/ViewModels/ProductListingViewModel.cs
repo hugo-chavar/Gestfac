@@ -1,5 +1,6 @@
 ﻿using Gestfac.Commands;
 using Gestfac.Models;
+using Gestfac.Services;
 using Gestfac.Stores;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ namespace Gestfac.ViewModels
     public class ProductListingViewModel : ViewModelBase
     {
         private readonly ObservableCollection<ProductViewModel> _products;
-        private readonly Catalog _catalog;
 
         private string _searchText;
         public string SearchText
@@ -35,19 +35,30 @@ namespace Gestfac.ViewModels
 
         public ICommand NewProductCommand { get; }
 
-        public ProductListingViewModel(Catalog catalog, Services.NavigationService addProductViewNavigationService)
+        public ICommand LoadProductsCommand { get; }
+
+        public ProductListingViewModel(Catalog catalog, NavigationService addProductViewNavigationService)
         {
-            _catalog = catalog;
             FindCommand = new FindProductsCommand(catalog, this);
+            LoadProductsCommand = new LoadProductsCommand(catalog, this);
             NewProductCommand = new NavigateCommand(addProductViewNavigationService);
             _products = new ObservableCollection<ProductViewModel>();
 
-            UpdateProducts();
         }
 
-        private void UpdateProducts()
+        public static ProductListingViewModel LoadViewModel(Catalog catalog, NavigationService addProductViewNavigationService)
         {
-            foreach (var product in _catalog.GetAllProducts())
+            ProductListingViewModel viewModel = new ProductListingViewModel(catalog, addProductViewNavigationService);
+
+            viewModel.LoadProductsCommand.Execute(null);
+
+            return viewModel;
+        }
+
+        public void UpdateProducts(IEnumerable<Product> products)
+        {
+
+            foreach (var product in products)
             {
                 ProductViewModel productViewModel = new ProductViewModel(product);
                 _products.Add(productViewModel);

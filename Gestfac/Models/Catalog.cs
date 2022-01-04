@@ -1,4 +1,6 @@
 ﻿using Gestfac.Exceptions;
+using Gestfac.Services.Creators;
+using Gestfac.Services.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,35 +11,48 @@ namespace Gestfac.Models
 {
     public class Catalog
     {
-        private readonly List<Product> _products;
 
-        public Catalog()
+        private readonly IProvider<Product> productProvider;
+        private readonly ICreator<Product> productCreator;
+
+
+        public Catalog(IProvider<Product> productProvider, ICreator<Product> productCreator)
         {
-            _products = new List<Product>();
+            this.productProvider = productProvider;
+            this.productCreator = productCreator;
         }
 
-        public IEnumerable<Product> GetProductsByDescription(string typedText)
+        public async Task<IEnumerable<Product>> GetProductsByDescriptionAsync(string typedText)
         {
-            return _products.Where(p => p.Description.Contains(typedText));
+            IEnumerable<Product> allProducts = await productProvider.GetAll();
+            
+            return allProducts.Where(p => p.Description.Contains(typedText));
         }
 
-        public IEnumerable<Product> GetProductsByTag(string tag)
+        public async Task<IEnumerable<Product>> GetProductsByTagAsync(string tag)
         {
-            return _products.Where(p => p.Tags.Contains(tag));
+            IEnumerable<Product> allProducts = await productProvider.GetAll();
+
+            return allProducts.Where(p => p.Tags.Contains(tag));
         }
 
-        public void AddProduct(Product product)
+        public async Task AddProductAsync(Product product)
         {
-            if (_products.Contains(product))
+            IEnumerable<Product> allProducts = await productProvider.GetAll();
+            if (allProducts.Contains(product))
             {
                 throw new ExistingProductException(product);
             }
 
-            _products.Add(product);
+            await productCreator.Create(product);
         }
 
-        public void UpdatePrice(IEnumerable<Product> updatedProducts)
+        public async Task UpdatePriceAsync(IEnumerable<Product> updatedProducts)
         {
+            IEnumerable<Product> allProducts = await productProvider.GetAll();
+
+            List<Product> _products = allProducts.ToList();
+
             foreach (Product product in updatedProducts)
             {
                 var current = _products.Find(p => p.Id == product.Id);
@@ -53,9 +68,10 @@ namespace Gestfac.Models
             }
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return _products;
+            IEnumerable<Product> allProducts = await productProvider.GetAll();
+            return allProducts;
         }
     }
 }

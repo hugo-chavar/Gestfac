@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace Gestfac.Commands
 {
-    public class AddProductCommand : CommandBase
+    public class AddProductCommand : AsyncCommandBase
     {
         private readonly Catalog catalog;
         private readonly AddProductViewModel addProductViewModel;
@@ -34,7 +34,7 @@ namespace Gestfac.Commands
                 base.CanExecute(parameter);
         }
 
-        public override void Execute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
             Product product = new Product()
             {
@@ -46,7 +46,7 @@ namespace Gestfac.Commands
 
             try
             {
-                catalog.AddProduct(product);
+                await catalog.AddProductAsync(product);
                 MessageBox.Show("Producto agregado correctamente", "Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 addProductViewNavigationService.Navigate();
@@ -55,6 +55,10 @@ namespace Gestfac.Commands
             {
 
                 MessageBox.Show("Producto ya existe", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No se pudo grabar el nuevo producto", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
         }
