@@ -26,6 +26,7 @@ namespace Gestfac
     {
         private const string ConnectionString = "Data source=gestfac.db";
         private readonly Catalog catalog;
+        private readonly CatalogStore catalogStore;
         private readonly NavigationStore _navigationStore;
         private readonly GestfacDbContextFactory _dbContextFactory;
 
@@ -35,6 +36,7 @@ namespace Gestfac
             IProvider<Product> productProvider = new DatabaseProductProvider(_dbContextFactory);
             ICreator<Product> productCreator = new DatabaseProductCreator(_dbContextFactory);
             catalog = new Catalog(productProvider, productCreator);
+            catalogStore = new CatalogStore(catalog);
             _navigationStore = new NavigationStore();
         }
         
@@ -58,12 +60,12 @@ namespace Gestfac
 
         private AddProductViewModel CreateAddProductViewModel()
         {
-            return new AddProductViewModel(catalog, new NavigationService(_navigationStore, CreateProductListingViewModel));
+            return new AddProductViewModel(catalogStore, new NavigationService(_navigationStore, CreateProductListingViewModel));
         }
 
         private ProductListingViewModel CreateProductListingViewModel()
         {
-            return ProductListingViewModel.LoadViewModel(catalog, new NavigationService(_navigationStore, CreateAddProductViewModel));
+            return ProductListingViewModel.LoadViewModel(catalogStore, new NavigationService(_navigationStore, CreateAddProductViewModel));
         }
     }
 }

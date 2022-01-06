@@ -1,4 +1,5 @@
 ﻿using Gestfac.Models;
+using Gestfac.Stores;
 using Gestfac.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace Gestfac.Commands
 {
     public class FindProductsCommand : AsyncCommandBase
     {
-        private readonly Catalog catalog;
+        private readonly CatalogStore catalogStore;
         private readonly ProductListingViewModel productListingViewModel;
 
-        public FindProductsCommand(Catalog catalog, ProductListingViewModel productListingViewModel)
+        public FindProductsCommand(CatalogStore catalogStore, ProductListingViewModel productListingViewModel)
         {
-            this.catalog = catalog;
+            this.catalogStore = catalogStore;
             this.productListingViewModel = productListingViewModel;
 
             this.productListingViewModel.PropertyChanged += OnViewModelPropertyChanged;

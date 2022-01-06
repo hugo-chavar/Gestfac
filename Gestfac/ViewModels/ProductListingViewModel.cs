@@ -37,18 +37,18 @@ namespace Gestfac.ViewModels
 
         public ICommand LoadProductsCommand { get; }
 
-        public ProductListingViewModel(Catalog catalog, NavigationService addProductViewNavigationService)
+        public ProductListingViewModel(CatalogStore catalogStore, NavigationService addProductViewNavigationService)
         {
-            FindCommand = new FindProductsCommand(catalog, this);
-            LoadProductsCommand = new LoadProductsCommand(catalog, this);
+            FindCommand = new FindProductsCommand(catalogStore, this);
+            LoadProductsCommand = new LoadProductsCommand(catalogStore, this);
             NewProductCommand = new NavigateCommand(addProductViewNavigationService);
             _products = new ObservableCollection<ProductViewModel>();
 
         }
 
-        public static ProductListingViewModel LoadViewModel(Catalog catalog, NavigationService addProductViewNavigationService)
+        public static ProductListingViewModel LoadViewModel(CatalogStore catalogStore, NavigationService addProductViewNavigationService)
         {
-            ProductListingViewModel viewModel = new ProductListingViewModel(catalog, addProductViewNavigationService);
+            ProductListingViewModel viewModel = new ProductListingViewModel(catalogStore, addProductViewNavigationService);
 
             viewModel.LoadProductsCommand.Execute(null);
 

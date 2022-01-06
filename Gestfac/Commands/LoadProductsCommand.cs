@@ -1,9 +1,6 @@
-﻿using Gestfac.Models;
+﻿using Gestfac.Stores;
 using Gestfac.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -11,12 +8,12 @@ namespace Gestfac.Commands
 {
     public class LoadProductsCommand : AsyncCommandBase
     {
-        private readonly Catalog catalog;
+        private readonly CatalogStore catalogStore;
         private readonly ProductListingViewModel productListingViewModel;
 
-        public LoadProductsCommand(Catalog catalog, ProductListingViewModel productListingViewModel)
+        public LoadProductsCommand(CatalogStore catalogStore, ProductListingViewModel productListingViewModel)
         {
-            this.catalog = catalog;
+            this.catalogStore = catalogStore;
             this.productListingViewModel = productListingViewModel;
 
         }
@@ -25,8 +22,8 @@ namespace Gestfac.Commands
         {
             try
             {
-                IEnumerable<Product> products = await catalog.GetAllProductsAsync();
-                productListingViewModel.UpdateProducts(products);
+                await catalogStore.Load();
+                productListingViewModel.UpdateProducts(catalogStore.Products);
 
             }
             catch (Exception)
