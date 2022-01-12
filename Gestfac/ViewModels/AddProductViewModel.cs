@@ -71,10 +71,10 @@ namespace Gestfac.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public AddProductViewModel(CatalogStore catalogStore, NavigationService addProductViewNavigationService)
+        public AddProductViewModel(CatalogStore catalogStore, NavigationService<ProductListingViewModel> productListingViewNavigationService)
         {
-            SubmitCommand = new AddProductCommand(this, catalogStore, addProductViewNavigationService);
-            CancelCommand = new NavigateCommand(addProductViewNavigationService);
+            SubmitCommand = new AddProductCommand(this, catalogStore, productListingViewNavigationService);
+            CancelCommand = new NavigateCommand<ProductListingViewModel>(productListingViewNavigationService);
         }
     }
 }

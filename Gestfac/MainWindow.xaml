@@ -11,17 +11,19 @@
         Height="450"
         Width="800"
         FontSize="14">
-    <Grid MaxWidth="600" Margin="20 10">
-        <Grid.Resources>
-            <DataTemplate DataType="{x:Type vms:AddProductViewModel}">
-                <views:AddProductView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:ProductListingViewModel}">
-                <views:ProductListingView />
-            </DataTemplate>
-        </Grid.Resources>
-        
-        <ContentControl  Content="{Binding CurrentViewModel}"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid MaxWidth="600" Margin="20 10">
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:AddProductViewModel}">
+                    <views:AddProductView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:ProductListingViewModel}">
+                    <views:ProductListingView />
+                </DataTemplate>
+            </Grid.Resources>
 
-    </Grid>
+            <ContentControl  Content="{Binding CurrentViewModel}"/>
+
+        </Grid>
+    </ScrollViewer>
 </Window>

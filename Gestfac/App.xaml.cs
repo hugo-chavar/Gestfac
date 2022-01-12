@@ -9,6 +9,9 @@ using Gestfac.Services.Providers.ProductProviders;
 using Gestfac.Stores;
 using Gestfac.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,48 +27,79 @@ namespace Gestfac
     /// </summary>
     public partial class App : Application
     {
-        private const string ConnectionString = "Data source=gestfac.db";
-        private readonly Catalog catalog;
-        private readonly CatalogStore catalogStore;
-        private readonly NavigationStore _navigationStore;
-        private readonly GestfacDbContextFactory _dbContextFactory;
+        private readonly IHost _host;
 
         public App()
         {
-            _dbContextFactory = new GestfacDbContextFactory(ConnectionString);
-            IProvider<Product> productProvider = new DatabaseProductProvider(_dbContextFactory);
-            ICreator<Product> productCreator = new DatabaseProductCreator(_dbContextFactory);
-            catalog = new Catalog(productProvider, productCreator);
-            catalogStore = new CatalogStore(catalog);
-            _navigationStore = new NavigationStore();
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices((hostContext, services) =>
+                {
+                    string connectionString = hostContext.Configuration.GetConnectionString("Default");
+
+                    services.AddSingleton(new GestfacDbContextFactory(connectionString));
+                    services.AddSingleton<IProvider<Product>, DatabaseProductProvider>();
+                    services.AddSingleton<ICreator<Product>, DatabaseProductCreator>();
+                    services.AddSingleton<Catalog>();
+                    services.AddSingleton<CatalogStore>();
+                    services.AddSingleton<NavigationStore>();
+
+                    services.AddTransient<AddProductViewModel>();
+                    services.AddSingleton<Func<AddProductViewModel>>((s) => () => s.GetRequiredService<AddProductViewModel>());
+
+                    services.AddTransient((s) => CreateProductListingViewModel(s));
+                    services.AddSingleton<Func<ProductListingViewModel>>((s) => () => s.GetRequiredService<ProductListingViewModel>());// 
+
+                    services.AddSingleton<NavigationService<ProductListingViewModel>>();
+                    services.AddSingleton<NavigationService<AddProductViewModel>>();
+
+                    services.AddSingleton<MainViewModel>();
+                    services.AddSingleton(s => new MainWindow()
+                    {
+                        DataContext = s.GetRequiredService<MainViewModel>()
+                    });
+
+                })
+                .Build();
+            
         }
-        
+
+        private ProductListingViewModel CreateProductListingViewModel(IServiceProvider s)
+        {
+           return ProductListingViewModel.LoadViewModel(
+               s.GetRequiredService<CatalogStore>(),
+               s.GetRequiredService<NavigationService<AddProductViewModel>>()
+               );
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            using (GestfacDbContext dbContext = _dbContextFactory.CreateDbContext())
+            _host.Start();
+            GestfacDbContextFactory dbContextFactory = _host.Services.GetRequiredService<GestfacDbContextFactory>();
+            using (GestfacDbContext dbContext = dbContextFactory.CreateDbContext())
             {
                 dbContext.Database.Migrate();
             }
 
-            _navigationStore.CurrentViewModel = CreateProductListingViewModel();
+            NavigationService<ProductListingViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<ProductListingViewModel>>();
+            navigationService.Navigate();
 
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainViewModel(_navigationStore)
-            };
+            MainWindow = _host.Services.GetRequiredService<MainWindow>();
+            
             MainWindow.Show();
              
             base.OnStartup(e);
         }
 
-        private AddProductViewModel CreateAddProductViewModel()
-        {
-            return new AddProductViewModel(catalogStore, new NavigationService(_navigationStore, CreateProductListingViewModel));
-        }
+        //private ProductListingViewModel CreateProductListingViewModel()
+        //{
+        //    return ProductListingViewModel.LoadViewModel(catalogStore, new NavigationService(_navigationStore, CreateAddProductViewModel));
+        //}
 
-        private ProductListingViewModel CreateProductListingViewModel()
+        protected override void OnExit(ExitEventArgs e)
         {
-            return ProductListingViewModel.LoadViewModel(catalogStore, new NavigationService(_navigationStore, CreateAddProductViewModel));
+            _host.Dispose();
+
+            base.OnExit(e);
         }
     }
 }

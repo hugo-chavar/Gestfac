@@ -15,9 +15,9 @@ namespace Gestfac.Commands
     {
         private readonly CatalogStore catalogStore;
         private readonly AddProductViewModel addProductViewModel;
-        private readonly NavigationService addProductViewNavigationService;
+        private readonly NavigationService<ProductListingViewModel> addProductViewNavigationService;
 
-        public AddProductCommand(AddProductViewModel addProductViewModel, CatalogStore catalogStore, NavigationService navigationService)
+        public AddProductCommand(AddProductViewModel addProductViewModel, CatalogStore catalogStore, NavigationService<ProductListingViewModel> navigationService)
         {
             this.catalogStore = catalogStore;
             this.addProductViewModel = addProductViewModel;

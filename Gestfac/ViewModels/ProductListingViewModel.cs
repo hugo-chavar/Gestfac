@@ -30,6 +30,20 @@ namespace Gestfac.ViewModels
             }
         }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
         public IEnumerable<ProductViewModel> Products => _products;
         public ICommand FindCommand { get; }
 
@@ -37,16 +51,16 @@ namespace Gestfac.ViewModels
 
         public ICommand LoadProductsCommand { get; }
 
-        public ProductListingViewModel(CatalogStore catalogStore, NavigationService addProductViewNavigationService)
+        public ProductListingViewModel(CatalogStore catalogStore, NavigationService<AddProductViewModel> addProductViewNavigationService)
         {
             FindCommand = new FindProductsCommand(catalogStore, this);
             LoadProductsCommand = new LoadProductsCommand(catalogStore, this);
-            NewProductCommand = new NavigateCommand(addProductViewNavigationService);
+            NewProductCommand = new NavigateCommand<AddProductViewModel>(addProductViewNavigationService);
             _products = new ObservableCollection<ProductViewModel>();
 
         }
 
-        public static ProductListingViewModel LoadViewModel(CatalogStore catalogStore, NavigationService addProductViewNavigationService)
+        public static ProductListingViewModel LoadViewModel(CatalogStore catalogStore, NavigationService<AddProductViewModel> addProductViewNavigationService)
         {
             ProductListingViewModel viewModel = new ProductListingViewModel(catalogStore, addProductViewNavigationService);
 

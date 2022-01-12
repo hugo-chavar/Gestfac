@@ -20,6 +20,8 @@ namespace Gestfac.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            productListingViewModel.IsLoading = true;
+
             try
             {
                 await catalogStore.Load();
@@ -32,6 +34,7 @@ namespace Gestfac.Commands
                 MessageBox.Show("No se pudo cargar los productos", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
+            productListingViewModel.IsLoading = false;
         }
     }
 }
