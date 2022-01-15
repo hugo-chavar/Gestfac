@@ -10,5 +10,14 @@ namespace Gestfac.DbContexts
         }
 
         public DbSet<ProductDTO> Products { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductDTO>()
+                        .HasIndex(u => u.ExternalId)
+                        .IsUnique();
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

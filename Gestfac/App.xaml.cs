@@ -90,11 +90,6 @@ namespace Gestfac
             base.OnStartup(e);
         }
 
-        //private ProductListingViewModel CreateProductListingViewModel()
-        //{
-        //    return ProductListingViewModel.LoadViewModel(catalogStore, new NavigationService(_navigationStore, CreateAddProductViewModel));
-        //}
-
         protected override void OnExit(ExitEventArgs e)
         {
             _host.Dispose();
