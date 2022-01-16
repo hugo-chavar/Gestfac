@@ -13,6 +13,13 @@ namespace Gestfac.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProductDTO>().ToTable("Products");
+            modelBuilder.Entity<PriceUpdateDTO>().ToTable("PriceUpdates");
+            modelBuilder.Entity<ProductDTO>()
+                        .HasMany(p => p.PriceUpdates)
+                        .WithOne(pu => pu.ProductDTO)
+                        .HasConstraintName("FK_PriceUpdates_Products_ProductId");
+
             modelBuilder.Entity<ProductDTO>()
                         .HasIndex(u => u.ExternalId)
                         .IsUnique();

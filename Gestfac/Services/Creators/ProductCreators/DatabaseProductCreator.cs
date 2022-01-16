@@ -34,7 +34,8 @@ namespace Gestfac.Services.Creators.ProductCreators
             {
                 ExternalId = product.ExternalId,
                 Description = product.Description,
-                CurrentPrice = product.CurrentPrice
+                CurrentPrice = product.CurrentPrice,
+                TagsSerialized = product.Tags != null ? string.Join(";", product.Tags) : string.Empty
             };
         }
     }

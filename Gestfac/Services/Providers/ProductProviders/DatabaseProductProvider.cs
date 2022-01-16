@@ -32,9 +32,11 @@ namespace Gestfac.Services.Providers.ProductProviders
         {
             return new Product()
             {
+                Id = p.ProductId,
                 ExternalId = p.ExternalId,
                 Description = p.Description,
-                CurrentPrice = p.CurrentPrice
+                CurrentPrice = p.CurrentPrice,
+                Tags = p.TagsSerialized.Split(';').ToList()
             };
         }
     }
