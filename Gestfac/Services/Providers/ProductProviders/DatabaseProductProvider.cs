@@ -23,7 +23,7 @@ namespace Gestfac.Services.Providers.ProductProviders
         {
             using (GestfacDbContext dbContext = _dbContextFactory.CreateDbContext())
             {
-                IEnumerable<ProductDTO> productDTOs = await dbContext.Products.ToListAsync();
+                IEnumerable<ProductDTO> productDTOs = await dbContext.Products.Include(p => p.CurrentPriceUpdate).ToListAsync();
                 return productDTOs.Select(p => ToProduct(p));
             }
         }
