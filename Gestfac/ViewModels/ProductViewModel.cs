@@ -18,7 +18,7 @@ namespace Gestfac.ViewModels
         public string ExternalId => _product.ExternalId;
         public string Description => _product.Description;
 
-        public double Price => _product.CurrentPrice;
+        public double Price => _product.CurrentPriceUpdate.Price;
 
         public string Tags => string.Join(", ", _product.Tags.ToArray());
     }

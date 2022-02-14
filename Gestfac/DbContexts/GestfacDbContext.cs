@@ -1,5 +1,6 @@
 ﻿using Gestfac.DTOs;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Gestfac.DbContexts
 {
@@ -10,6 +11,7 @@ namespace Gestfac.DbContexts
         }
 
         public DbSet<ProductDTO> Products { get; set; }
+        public DbSet<PriceUpdateDTO> PriceUpdates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,8 +19,15 @@ namespace Gestfac.DbContexts
             modelBuilder.Entity<PriceUpdateDTO>().ToTable("PriceUpdates");
             modelBuilder.Entity<ProductDTO>()
                         .HasMany(p => p.PriceUpdates)
-                        .WithOne(pu => pu.ProductDTO)
+                        .WithOne(pu => pu.Product)
+                        .HasForeignKey(pu => pu.ProductId)
                         .HasConstraintName("FK_PriceUpdates_Products_ProductId");
+
+            modelBuilder.Entity<ProductDTO>()
+                        .HasOne(p => p.CurrentPriceUpdate)
+                        .WithMany()
+                        .HasForeignKey(p => p.CurrentPriceUpdateId)
+                        .HasConstraintName("FK_Products_PriceUpdates_CurrentPriceUpdateId");
 
             modelBuilder.Entity<ProductDTO>()
                         .HasIndex(u => u.ExternalId)

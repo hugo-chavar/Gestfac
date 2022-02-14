@@ -39,7 +39,7 @@ namespace Gestfac.Commands
             {
                 ExternalId = addProductViewModel.ExternalId,
                 Description = addProductViewModel.Description,
-                CurrentPrice = addProductViewModel.CurrentPrice,
+                CurrentPriceUpdate = new PriceUpdate() { Date = DateTime.Today, Price = addProductViewModel.CurrentPrice },
                 Tags = addProductViewModel.Tags?.Split(' ').ToList()
             };
 

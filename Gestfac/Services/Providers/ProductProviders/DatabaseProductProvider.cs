@@ -35,7 +35,7 @@ namespace Gestfac.Services.Providers.ProductProviders
                 Id = p.ProductId,
                 ExternalId = p.ExternalId,
                 Description = p.Description,
-                CurrentPrice = p.CurrentPrice,
+                CurrentPriceUpdate = new PriceUpdate { Date = p.CurrentPriceUpdate.Date, Price = p.CurrentPriceUpdate.Price},
                 Tags = p.TagsSerialized.Split(';').ToList()
             };
         }

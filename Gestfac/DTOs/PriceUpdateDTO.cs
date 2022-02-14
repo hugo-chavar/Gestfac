@@ -9,9 +9,8 @@ namespace Gestfac.DTOs
         public double Price { get; set; }
         public DateTime Date { get; set; }
 
-        [Column("ProductId")]
-        public int ProductDTOId { get; set; }
+        public int ProductId { get; set; }
 
-        public ProductDTO ProductDTO { get; set; }
+        public ProductDTO Product { get; set; }
     }
 }

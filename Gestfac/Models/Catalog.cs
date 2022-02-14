@@ -56,14 +56,14 @@ namespace Gestfac.Models
             foreach (Product product in updatedProducts)
             {
                 var current = _products.Find(p => p.Id == product.Id);
-                
+
                 if (current == null)
                 {
                     throw new NotExistingProductException(product);
                 }
 
 
-                current.UpdatePrice(product.CurrentPrice);
+                current.UpdatePrice(product.CurrentPriceUpdate.Price);
 
             }
         }

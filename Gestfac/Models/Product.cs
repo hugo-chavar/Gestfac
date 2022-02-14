@@ -12,8 +12,10 @@ namespace Gestfac.Models
         public string ExternalId { get; set; }
         [Required]
         public string Description { get; set; }
-        [Required]
-        public double CurrentPrice { get; set; }
+
+        public int CurrentPriceUpdateId { get; set; }
+
+        public PriceUpdate CurrentPriceUpdate { get; set; }
 
         public List<string> Tags { get; set; }
         public List<PriceUpdate> PriceUpdates { get; set; }
@@ -44,8 +46,8 @@ namespace Gestfac.Models
 
         public void UpdatePrice(double currentPrice)
         {
-            CurrentPrice = currentPrice;
-            PriceUpdates.Add(new PriceUpdate() { Date = DateTime.Now, Price = currentPrice });
+            CurrentPriceUpdate = new PriceUpdate() { Date = DateTime.Now, Price = currentPrice };
+            PriceUpdates.Add(CurrentPriceUpdate);
         }
     }
 }

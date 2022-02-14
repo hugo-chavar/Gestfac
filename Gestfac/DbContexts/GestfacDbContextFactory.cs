@@ -19,7 +19,10 @@ namespace Gestfac.DbContexts
 
         public GestfacDbContext CreateDbContext()
         {
-            DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(_connectionString).Options;
+            DbContextOptionsBuilder dbContextOptionsBuilder = new DbContextOptionsBuilder();
+            dbContextOptionsBuilder.EnableSensitiveDataLogging();
+            dbContextOptionsBuilder.UseSqlite("Data source=gestfac.db");
+            DbContextOptions options = dbContextOptionsBuilder.Options;
 
             return new GestfacDbContext(options);
         }

@@ -23,7 +23,14 @@ namespace Gestfac.Services.Creators.ProductCreators
             using (GestfacDbContext dbContext = _dbContextFactory.CreateDbContext())
             {
                 ProductDTO productDTO = ToProductDTO(product);
+                var priceUpdateDTO = dbContext.PriceUpdates.Add(new PriceUpdateDTO() {  Date = product.CurrentPriceUpdate.Date, Price = product.CurrentPriceUpdate.Price });
+                productDTO.PriceUpdates.Add(priceUpdateDTO.Entity);
+                
                 dbContext.Products.Add(productDTO);
+                await dbContext.SaveChangesAsync();
+
+                productDTO.CurrentPriceUpdate = priceUpdateDTO.Entity;
+                dbContext.Products.Update(productDTO);
                 await dbContext.SaveChangesAsync();
             }
         }
@@ -34,7 +41,7 @@ namespace Gestfac.Services.Creators.ProductCreators
             {
                 ExternalId = product.ExternalId,
                 Description = product.Description,
-                CurrentPrice = product.CurrentPrice,
+                PriceUpdates = new List<PriceUpdateDTO>(),
                 TagsSerialized = product.Tags != null ? string.Join(";", product.Tags) : string.Empty
             };
         }
