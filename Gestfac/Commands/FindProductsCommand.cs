@@ -7,10 +7,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Gestfac.Commands
 {
-    public class FindProductsCommand : AsyncCommandBase
+    public class FindProductsCommand : CommandBase
     {
         private readonly CatalogStore catalogStore;
         private readonly ProductListingViewModel productListingViewModel;
@@ -31,9 +32,22 @@ namespace Gestfac.Commands
                 base.CanExecute(parameter);
         }
 
-        public override Task ExecuteAsync(object parameter)
+        public override void Execute(object parameter)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                
+                productListingViewModel.UpdateProducts(catalogStore.Products);
+
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("No se pudo filtrar los productos", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
         }
 
 

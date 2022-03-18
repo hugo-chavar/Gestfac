@@ -30,6 +30,7 @@ namespace Gestfac.Commands
             return
                 !string.IsNullOrWhiteSpace(addProductViewModel.ExternalId) &&
                 !string.IsNullOrWhiteSpace(addProductViewModel.Description) &&
+                addProductViewModel.CurrentPrice > 0 &&
                 base.CanExecute(parameter);
         }
 

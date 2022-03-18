@@ -71,8 +71,18 @@ namespace Gestfac.ViewModels
 
         public void UpdateProducts(IEnumerable<Product> products)
         {
+            _products.Clear();
 
-            foreach (var product in products)
+            Func<Product, bool> filter = (product) =>
+            {
+                if (_searchText == null || _searchText.Length < 2)
+                {
+                    return true;
+                }
+                return product.Description.ToUpper().Contains(_searchText.ToUpper());
+            };
+            
+            foreach (var product in products.Where(filter))
             {
                 ProductViewModel productViewModel = new ProductViewModel(product);
                 _products.Add(productViewModel);
