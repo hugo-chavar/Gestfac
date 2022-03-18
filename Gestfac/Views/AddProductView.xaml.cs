@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,8 @@ namespace Gestfac.Views
     /// </summary>
     public partial class AddProductView : UserControl
     {
+
+        private static readonly Regex _regexNumbers = new Regex("[^0-9.]+");
         public AddProductView()
         {
             InitializeComponent();
@@ -46,6 +49,26 @@ namespace Gestfac.Views
                     tb.Focus();
                 }
             }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            bool isHandled = true;
+            string decimalPoint = ".";
+            if (!_regexNumbers.IsMatch(e.Text))
+            {
+                if (e.Text == decimalPoint)
+                {
+                    string previosTyped = ((TextBox)sender).Text;
+                    isHandled = previosTyped.Contains(decimalPoint);
+                }
+                else
+                {
+                    isHandled = false;
+                }
+            }
+
+            e.Handled = isHandled;
         }
     }
 }
