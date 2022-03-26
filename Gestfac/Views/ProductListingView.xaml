@@ -13,7 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="280"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
@@ -48,7 +48,9 @@
                 Color="BlueViolet"
                 IsLoading="{Binding IsLoading}"
                 />
-            <ListView 
+            <ListView  
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ItemsSource="{Binding Products}"
                 Visibility="{Binding IsLoading, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                 <ListView.ItemContainerStyle>
