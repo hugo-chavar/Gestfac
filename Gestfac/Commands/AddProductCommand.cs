@@ -65,7 +65,7 @@ namespace Gestfac.Commands
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(AddProductViewModel.ExternalId) || e.PropertyName == nameof(AddProductViewModel.Description))
+            if (e.PropertyName == nameof(AddProductViewModel.ExternalId) || e.PropertyName == nameof(AddProductViewModel.Description) || e.PropertyName == nameof(AddProductViewModel.CurrentPrice))
             {
                 OnCanExecuteChanged();
             }
