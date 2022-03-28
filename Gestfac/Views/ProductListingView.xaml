@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gestfac.Views" xmlns:converters="clr-namespace:Gestfac.Converters" xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="850" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     </UserControl.Resources>
@@ -14,6 +14,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="280"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
@@ -92,7 +94,47 @@
             Content="Nuevo Producto"
             Command="{Binding NewProductCommand}"
             />
-        
+
+        <TextBlock 
+            Grid.Row="4"
+            Text="Actualizar precios" 
+            FontSize="24" />
+
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox 
+                Grid.Column="0"
+                MinWidth="250"
+                Margin="0 5 0 0"
+                ItemsSource="{Binding PriceUpdateTypes}"
+                SelectedValue="{Binding SelectedPriceUpdateType}"
+                DisplayMemberPath="Description"
+                >
+                
+            </ComboBox>
+            
+            <TextBox
+                Grid.Column="1"
+                MinWidth="250"
+                Margin="0 5 0 0"
+                Text="{Binding ValuePriceUpdate, StringFormat=F2}"
+                MouseDoubleClick="SelectCurrentPrice"
+                GotKeyboardFocus="SelectCurrentPrice"
+                PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"
+                PreviewTextInput="TextBox_PreviewTextInput"
+                />
+            <Button 
+                Grid.Column="2"
+                Margin="5 5 0 0"
+                Content="Actualizar"
+                Command="{Binding UpdatePricesCommand}"
+                />
+        </Grid>
+
     </Grid>
     
     

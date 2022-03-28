@@ -24,12 +24,6 @@ namespace Gestfac.Models
 
         public override bool Equals(object obj)
         {
-            //       
-            // See the full list of guidelines at
-            //   http://go.microsoft.com/fwlink/?LinkID=85237  
-            // and also the guidance for operator== at
-            //   http://go.microsoft.com/fwlink/?LinkId=85238
-            //
 
             if (obj == null || GetType() != obj.GetType())
             {
@@ -47,6 +41,10 @@ namespace Gestfac.Models
         public void UpdatePrice(double currentPrice)
         {
             CurrentPriceUpdate = new PriceUpdate() { Date = DateTime.Now, Price = currentPrice };
+            if (PriceUpdates == null)
+            {
+                PriceUpdates = new List<PriceUpdate>();
+            }
             PriceUpdates.Add(CurrentPriceUpdate);
         }
     }

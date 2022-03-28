@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Gestfac.ViewModels
@@ -45,6 +43,40 @@ namespace Gestfac.ViewModels
             }
         }
 
+        private string _valuePriceUpdate;
+
+        public string ValuePriceUpdate
+        {
+            get
+            {
+                return _valuePriceUpdate;
+            }
+            set
+            {
+                _valuePriceUpdate = value;
+                OnPropertyChanged(nameof(ValuePriceUpdate));
+            }
+        }
+
+        private PriceUpdateType _selectedPriceUpdateType;
+
+        public PriceUpdateType SelectedPriceUpdateType
+        {
+            get
+            {
+                return _selectedPriceUpdateType;
+            }
+            set
+            {
+                _selectedPriceUpdateType = value;
+                OnPropertyChanged(nameof(SelectedPriceUpdateType));
+            }
+        }
+
+        private readonly ObservableCollection<PriceUpdateType> _priceUpdateTypes;
+
+        public IEnumerable<PriceUpdateType> PriceUpdateTypes => _priceUpdateTypes;
+
         public IEnumerable<ProductViewModel> Products => _products;
         public ICommand FindCommand { get; }
 
@@ -52,12 +84,19 @@ namespace Gestfac.ViewModels
 
         public ICommand LoadProductsCommand { get; }
 
+        public ICommand UpdatePricesCommand { get; }
+
         public ProductListingViewModel(CatalogStore catalogStore, NavigationService<AddProductViewModel> addProductViewNavigationService)
         {
             FindCommand = new FindProductsCommand(catalogStore, this);
             LoadProductsCommand = new LoadProductsCommand(catalogStore, this);
             NewProductCommand = new NavigateCommand<AddProductViewModel>(addProductViewNavigationService);
+            UpdatePricesCommand = new UpdateProductCommand(catalogStore, this);
             _products = new ObservableCollection<ProductViewModel>();
+            _priceUpdateTypes = new ObservableCollection<PriceUpdateType>();
+
+            _priceUpdateTypes.Add(new PriceUpdateType() { Id = 1, Description = "Porcentaje" });
+            _priceUpdateTypes.Add(new PriceUpdateType() { Id = 2, Description = "Valor fijo" });
 
         }
 

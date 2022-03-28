@@ -32,6 +32,17 @@ namespace Gestfac.Stores
             _products.Add(product);
         }
 
+        public async Task UpdateProducts(IEnumerable<Product> products)
+        {
+            await _catalog.UpdatePriceAsync(products);
+
+            foreach (Product product in products)
+            {
+                var index = _products.IndexOf(product);
+                _products[index] = product;
+            }
+        }
+
         private async Task Initialize()
         {
             IEnumerable<Product> products = await _catalog.GetAllProductsAsync();

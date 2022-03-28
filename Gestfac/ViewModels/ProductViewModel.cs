@@ -21,5 +21,7 @@ namespace Gestfac.ViewModels
         public double Price => _product.CurrentPriceUpdate.Price;
 
         public string Tags => string.Join(", ", _product.Tags.ToArray());
+
+        public Product Product => _product;
     }
 }

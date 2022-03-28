@@ -6,6 +6,7 @@ using Gestfac.Services.Creators;
 using Gestfac.Services.Creators.ProductCreators;
 using Gestfac.Services.Providers;
 using Gestfac.Services.Providers.ProductProviders;
+using Gestfac.Services.Updaters;
 using Gestfac.Stores;
 using Gestfac.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,7 @@ namespace Gestfac
                     services.AddSingleton(new GestfacDbContextFactory(connectionString));
                     services.AddSingleton<IProvider<Product>, DatabaseProductProvider>();
                     services.AddSingleton<ICreator<Product>, DatabaseProductCreator>();
+                    services.AddSingleton<IUpdater<Product>, DatabaseProductUpdater>();
                     services.AddSingleton<Catalog>();
                     services.AddSingleton<CatalogStore>();
                     services.AddSingleton<NavigationStore>();
@@ -47,7 +49,7 @@ namespace Gestfac
                     services.AddSingleton<Func<AddProductViewModel>>((s) => () => s.GetRequiredService<AddProductViewModel>());
 
                     services.AddTransient((s) => CreateProductListingViewModel(s));
-                    services.AddSingleton<Func<ProductListingViewModel>>((s) => () => s.GetRequiredService<ProductListingViewModel>());// 
+                    services.AddSingleton<Func<ProductListingViewModel>>((s) => () => s.GetRequiredService<ProductListingViewModel>());
 
                     services.AddSingleton<NavigationService<ProductListingViewModel>>();
                     services.AddSingleton<NavigationService<AddProductViewModel>>();
