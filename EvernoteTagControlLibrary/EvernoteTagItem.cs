@@ -45,7 +45,7 @@ namespace EvernoteTagControlLibrary
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    [TemplatePart(Name = "PART_InputBox", Type = typeof(AutoCompleteBox))]
+    [TemplatePart(Name = "PART_InputBox", Type = typeof(ComboBox))]
     [TemplatePart(Name = "PART_DeleteTagButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_TagButton", Type = typeof(Button))]
     public class EvernoteTagItem : Control
@@ -76,7 +76,7 @@ namespace EvernoteTagControlLibrary
         /// </summary>
         public override void OnApplyTemplate()
         {
-            AutoCompleteBox inputBox = this.GetTemplateChild("PART_InputBox") as AutoCompleteBox;
+            ComboBox inputBox = this.GetTemplateChild("PART_InputBox") as ComboBox;
             if (inputBox != null)
             {
                 inputBox.LostFocus += inputBox_LostFocus;
@@ -130,7 +130,7 @@ namespace EvernoteTagControlLibrary
         /// <remarks>AutoCompleteBox.Focus() is broken: http://stackoverflow.com/questions/3572299/autocompletebox-focus-in-wpf</remarks>
         void inputBox_Loaded(object sender, RoutedEventArgs e)
         {
-            AutoCompleteBox acb = sender as AutoCompleteBox;
+            ComboBox acb = sender as ComboBox;
             if (acb != null)
             {
                 var tb = acb.Template.FindName("Text", acb) as TextBox;

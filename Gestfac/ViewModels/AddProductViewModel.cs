@@ -1,4 +1,5 @@
-﻿using Gestfac.Commands;
+﻿using EvernoteTagControlLibrary;
+using Gestfac.Commands;
 using Gestfac.Models;
 using Gestfac.Services;
 using Gestfac.Stores;
@@ -55,6 +56,18 @@ namespace Gestfac.ViewModels
             }
         }
 
+        private List<EvernoteTagItem> _selectedTags = new List<EvernoteTagItem>();
+        public List<EvernoteTagItem> SelectedTags
+        {
+            get { return _selectedTags; }
+            set
+            {
+                _selectedTags = value;
+                if (_selectedTags != value)
+                    OnPropertyChanged("SelectedTags");
+            }
+        }
+
         public double CurrentPrice
         {
             get
@@ -75,6 +88,8 @@ namespace Gestfac.ViewModels
         {
             SubmitCommand = new AddProductCommand(this, catalogStore, productListingViewNavigationService);
             CancelCommand = new NavigateCommand<ProductListingViewModel>(productListingViewNavigationService);
+
+            this.SelectedTags = new List<EvernoteTagItem>() { new EvernoteTagItem("news"), new EvernoteTagItem("priority") };
         }
     }
 }

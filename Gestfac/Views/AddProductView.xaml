@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Gestfac.Views"
+             xmlns:local="clr-namespace:Gestfac.Views" xmlns:local1="clr-namespace:EvernoteTagControlLibrary;assembly=EvernoteTagControlLibrary" xmlns:s="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -67,6 +67,17 @@
                 Margin="0 5 0 0"
                 Text="{Binding Tags}"
             />
+            <!-- todo: implement ICommand properties on EvernoteTagControl to allow easy binding to the viewmodel. Alternatively, the user could use a behavior to handle TagClick, and if necessary TagAdded/TagRemoved -->
+            <local1:EvernoteTagControl Grid.Row="1" ItemsSource="{Binding SelectedTags}">
+                <!--="TagControl_TagClick" >-->
+                <local1:EvernoteTagControl.AllTags>
+                    <s:String>read</s:String>
+                    <s:String>receipt</s:String>
+                    <s:String>recipe</s:String>
+                    <s:String>research</s:String>
+                    <s:String>restaurants</s:String>
+                </local1:EvernoteTagControl.AllTags>
+            </local1:EvernoteTagControl>
         </Grid>
         <Grid 
             Grid.Row="4"
