@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Windows.UI.Xaml.Controls;
 
 namespace EvernoteTagControlLibrary
 {
@@ -45,10 +45,10 @@ namespace EvernoteTagControlLibrary
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    [TemplatePart(Name = "PART_InputBox", Type = typeof(ComboBox))]
-    [TemplatePart(Name = "PART_DeleteTagButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_TagButton", Type = typeof(Button))]
-    public class EvernoteTagItem : Control
+    [TemplatePart(Name = "PART_InputBox", Type = typeof(AutoSuggestBox))]
+    [TemplatePart(Name = "PART_DeleteTagButton", Type = typeof(System.Windows.Controls.Button))]
+    [TemplatePart(Name = "PART_TagButton", Type = typeof(System.Windows.Controls.Button))]
+    public class EvernoteTagItem : System.Windows.Controls.Control
     {
         static EvernoteTagItem()
         {
@@ -76,20 +76,20 @@ namespace EvernoteTagControlLibrary
         /// </summary>
         public override void OnApplyTemplate()
         {
-            ComboBox inputBox = this.GetTemplateChild("PART_InputBox") as ComboBox;
-            if (inputBox != null)
-            {
-                inputBox.LostFocus += inputBox_LostFocus;
-                inputBox.Loaded += inputBox_Loaded;
-            }
+            //AutoSuggestBox inputBox = this.GetTemplateChild("PART_InputBox") as AutoSuggestBox;
+            //if (inputBox != null)
+            //{
+            //    inputBox.LostFocus += inputBox_LostFocus;
+            //    inputBox.Loaded += inputBox_Loaded;
+            //}
 
-            Button btn = this.GetTemplateChild("PART_TagButton") as Button;
+            System.Windows.Controls.Button btn = this.GetTemplateChild("PART_TagButton") as System.Windows.Controls.Button;
             if (btn != null)
             {
                 btn.Loaded += (s, e) =>
                 {
-                    Button b = s as Button;
-                    var btnDelete = b.Template.FindName("PART_DeleteTagButton", b) as Button; // will only be found once button is loaded
+                    System.Windows.Controls.Button b = s as System.Windows.Controls.Button;
+                    var btnDelete = b.Template.FindName("PART_DeleteTagButton", b) as System.Windows.Controls.Button; // will only be found once button is loaded
                     if (btnDelete != null)
                     {
                         btnDelete.Click -= btnDelete_Click; // make sure the handler is applied just once
@@ -130,32 +130,36 @@ namespace EvernoteTagControlLibrary
         /// <remarks>AutoCompleteBox.Focus() is broken: http://stackoverflow.com/questions/3572299/autocompletebox-focus-in-wpf</remarks>
         void inputBox_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBox acb = sender as ComboBox;
-            if (acb != null)
-            {
-                var tb = acb.Template.FindName("Text", acb) as TextBox;
-                if (tb != null)
-                    tb.Focus();
+            AutoSuggestBox acb = sender as AutoSuggestBox;
 
-                // PreviewKeyDown, because KeyDown does not bubble up for Enter
-                acb.PreviewKeyDown += (s, e1) =>
-                {
-                    var parent = GetParent();
-                    if (parent != null)
-                    {
-                        switch (e1.Key)
-                        {
-                            case (Key.Enter):  // accept tag
-                                parent.Focus();
-                                break;
-                            case (Key.Escape): // reject tag
-                                parent.Focus();
-                                parent.RemoveTag(this, true); // do not raise RemoveTag event
-                                break;
-                        }
-                    }
-                };
-            }
+            acb.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+
+           
+            //if (acb != null)
+            //{
+            //    var tb = acb.Template.("Text", acb) as System.Windows.Controls.TextBox;
+            //    if (tb != null)
+            //        tb.Focus();
+
+            //    // PreviewKeyDown, because KeyDown does not bubble up for Enter
+            //    acb.PreviewKeyDown += (s, e1) =>
+            //    {
+            //        var parent = GetParent();
+            //        if (parent != null)
+            //        {
+            //            switch (e1.Key)
+            //            {
+            //                case (Windows.System.VirtualKey.Enter):  // accept tag
+            //                    parent.Focus();
+            //                    break;
+            //                case (Windows.System.VirtualKey.Escape): // reject tag
+            //                    parent.Focus();
+            //                    parent.RemoveTag(this, true); // do not raise RemoveTag event
+            //                    break;
+            //            }
+            //        }
+            //    };
+            //}
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gestfac", "Gestfac\Gestfac.csproj", "{F1C35B99-F9D9-405F-BBD0-EB6BC068D6D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvernoteTagControlLibrary", "EvernoteTagControlLibrary\EvernoteTagControlLibrary.csproj", "{FEE56256-FA1F-4888-989C-C1FBD7652BD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvernoteTagControlLibrary", "EvernoteTagControlLibrary\EvernoteTagControlLibrary.csproj", "{FEE56256-FA1F-4888-989C-C1FBD7652BD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
