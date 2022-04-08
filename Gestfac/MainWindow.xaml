@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:Gestfac" 
         xmlns:views="clr-namespace:Gestfac.Views"
         xmlns:vms="clr-namespace:Gestfac.ViewModels"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
         Title="Productos"
         Height="850"
         Width="800"
+        Background="#2B2C2D"
         FontSize="14">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid MaxWidth="600" Margin="20 10">
