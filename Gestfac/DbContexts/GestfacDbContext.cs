@@ -33,6 +33,7 @@ namespace Gestfac.DbContexts
                         .HasIndex(u => u.ExternalId)
                         .IsUnique();
 
+
             base.OnModelCreating(modelBuilder);
         }
     }

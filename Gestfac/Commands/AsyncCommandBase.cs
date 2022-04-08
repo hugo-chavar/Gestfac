@@ -29,17 +29,19 @@ namespace Gestfac.Commands
 
         public override async void Execute(object parameter)
         {
+
             IsExecuting = true;
 
             try
             {
+
                 await ExecuteAsync(parameter);
             }
             finally
             {
                 IsExecuting = false;
             }
-            
+
         }
 
         public abstract Task ExecuteAsync(object parameter);

@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Gestfac.Commands
 {
-    public class UpdateProductCommand : AsyncCommandBase
+    public class UpdateProductCommand : CommandBase
     {
         private readonly CatalogStore catalogStore;
         private readonly ProductListingViewModel productListingViewModel;
@@ -33,11 +33,12 @@ namespace Gestfac.Commands
                 productListingViewModel.SelectedPriceUpdateType != null &&
                 valuePriceUpdate > 0 &&
                 (productListingViewModel.SelectedPriceUpdateType.Id == 1 ? valuePriceUpdate  <= 100 : true) &&
+                !productListingViewModel.IsLoading &&
                 productListingViewModel.Products.Any() &&
                 base.CanExecute(parameter);
         }
 
-        public override async Task ExecuteAsync(object parameter)
+        public override async void Execute(object parameter)
         {
             productListingViewModel.IsLoading = true;
 
@@ -47,6 +48,7 @@ namespace Gestfac.Commands
 
                 double valuePriceUpdate;
                 double.TryParse(productListingViewModel.ValuePriceUpdate, out valuePriceUpdate);
+                productListingViewModel.ValuePriceUpdate = "";
 
                 if (productListingViewModel.SelectedPriceUpdateType.Id == 1)
                     valuePriceUpdate = valuePriceUpdate / 100;
@@ -66,13 +68,20 @@ namespace Gestfac.Commands
 
                     product.CurrentPriceUpdate.Price = Math.Round(product.CurrentPriceUpdate.Price, 2);
                 }
-                
 
-                await catalogStore.UpdateProducts(products);
+                IEnumerable<List<Product>> chunks = SplitList(products.ToList());
+
+                foreach (List<Product> chunk in chunks)
+                {
+                    await Task.Run(() => catalogStore.UpdateProducts(chunk));
+                }
+
+                
 
                 productListingViewModel.UpdateProducts(catalogStore.Products);
 
-                productListingViewModel.ValuePriceUpdate = "";
+                productListingViewModel.IsLoading = false;
+
 
                 MessageBox.Show("Producto actualizado correctamente", "Exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -80,10 +89,12 @@ namespace Gestfac.Commands
             catch (Exception e)
             {
 
+                productListingViewModel.IsLoading = false;
+
                 MessageBox.Show("No se pudo actualizar los precios de los productos-  " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            productListingViewModel.IsLoading = false;
+            
         }
 
         private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -91,6 +102,14 @@ namespace Gestfac.Commands
             if (e.PropertyName == nameof(ProductListingViewModel.SelectedPriceUpdateType) || e.PropertyName == nameof(ProductListingViewModel.ValuePriceUpdate))
             {
                 OnCanExecuteChanged();
+            }
+        }
+
+        public static IEnumerable<List<T>> SplitList<T>(List<T> locations, int nSize = 30)
+        {
+            for (int i = 0; i < locations.Count; i += nSize)
+            {
+                yield return locations.GetRange(i, Math.Min(nSize, locations.Count - i));
             }
         }
     }

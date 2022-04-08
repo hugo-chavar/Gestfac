@@ -28,10 +28,10 @@ namespace Gestfac.Commands
                 productListingViewModel.UpdateProducts(catalogStore.Products);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                MessageBox.Show("No se pudo cargar los productos", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("No se pudo cargar los productos. " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
             productListingViewModel.IsLoading = false;
