@@ -79,7 +79,7 @@
                         <GridViewColumn Header="Precio">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Padding="0 0 20 0" Text="{Binding Price}"/>
+                                    <TextBlock Padding="0 0 0 0" HorizontalAlignment="Right" Text="{Binding PriceString}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

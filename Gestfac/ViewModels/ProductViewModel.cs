@@ -20,6 +20,13 @@ namespace Gestfac.ViewModels
 
         public double Price => _product.CurrentPriceUpdate.Price;
 
+        public string PriceString
+        {
+            get => _product.CurrentPriceUpdate.Price.ToString().PadLeft(10);
+
+            set { }
+        }
+
         public string Tags => string.Join(", ", _product.Tags.ToArray());
 
         public Product Product => _product;
