@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gestfac.Views" xmlns:converters="clr-namespace:Gestfac.Converters" xmlns:loadingspinnercontrol="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="800">
+             d:DesignHeight="850" d:DesignWidth="1000">
     <UserControl.Resources>
         <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
     </UserControl.Resources>
@@ -35,12 +35,12 @@
                 Margin="0 5 0 0"
                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                 />
-            <Button 
+            <!--<Button 
                 Grid.Column="1"
                 Margin="5 5 0 0"
                 Content="Buscar"
                 Command="{Binding FindCommand}"
-                />
+                />-->
         </Grid>
 
         <Grid Grid.Row="2" Margin="0 25 0 0" >
@@ -65,21 +65,21 @@
                         <GridViewColumn Header="Codigo">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding ExternalId}"/>
+                                    <TextBlock  Width="150" Text="{Binding ExternalId}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Descripcion">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Padding="0 0 20 0" MinWidth="300" Text="{Binding Description}"/>
+                                    <TextBlock Padding="0 0 20 0" MinWidth="350" Text="{Binding Description}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Precio">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Padding="0 0 0 0" HorizontalAlignment="Right" Text="{Binding PriceString}"/>
+                                    <TextBlock Padding="0 0 20 0" TextAlignment="Right" Width="150" Text="{Binding PriceString}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

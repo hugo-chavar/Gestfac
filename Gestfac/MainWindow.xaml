@@ -9,10 +9,10 @@
         mc:Ignorable="d"
         Title="Productos"
         Height="850"
-        Width="800"
+        Width="1000"
         FontSize="14">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid MaxWidth="600" Margin="20 10">
+        <Grid MaxWidth="800" Margin="20 10">
             <Grid.Resources>
                 <DataTemplate DataType="{x:Type vms:AddProductViewModel}">
                     <views:AddProductView />

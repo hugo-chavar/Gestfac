@@ -1,6 +1,7 @@
 ﻿using Gestfac.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,10 @@ namespace Gestfac.ViewModels
 
         public string PriceString
         {
-            get => _product.CurrentPriceUpdate.Price.ToString().PadLeft(10);
+            get
+            {
+                return string.Format(CultureInfo.GetCultureInfo("es-AR"), "{0:N2}", _product.CurrentPriceUpdate.Price);
+            }
 
             set { }
         }
