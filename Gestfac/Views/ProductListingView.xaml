@@ -28,6 +28,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBox
                 Grid.Column="0"
@@ -41,6 +42,18 @@
                 Content="Buscar"
                 Command="{Binding FindCommand}"
                 />-->
+            <TextBlock 
+                Grid.Column="1"
+                Margin="20 5 0 0"
+                Width="50"
+                TextAlignment="Right"
+                Text="{Binding ProductsCount, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"/>
+            <TextBlock 
+                Grid.Column="2"
+                Margin="5 5 0 0"
+                Text="productos mostrados"
+                FontSize="20"/>
         </Grid>
 
         <Grid Grid.Row="2" Margin="0 25 0 0" >

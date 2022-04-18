@@ -26,6 +26,7 @@ namespace Gestfac.ViewModels
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
                 FindCommand.Execute(null);
+                OnPropertyChanged(nameof(ProductsCount));
             }
         }
 
@@ -70,6 +71,14 @@ namespace Gestfac.ViewModels
             {
                 _selectedPriceUpdateType = value;
                 OnPropertyChanged(nameof(SelectedPriceUpdateType));
+            }
+        }
+
+        public string ProductsCount
+        {
+            get
+            {
+                return $"{_products.Count}";
             }
         }
 
@@ -127,6 +136,8 @@ namespace Gestfac.ViewModels
                 ProductViewModel productViewModel = new ProductViewModel(product);
                 _products.Add(productViewModel);
             }
+
+            OnPropertyChanged(nameof(ProductsCount));
         }
     }
 }
