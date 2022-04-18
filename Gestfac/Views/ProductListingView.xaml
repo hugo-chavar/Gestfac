@@ -47,7 +47,7 @@
                 Margin="20 5 0 0"
                 Width="50"
                 TextAlignment="Right"
-                Text="{Binding ProductsCount, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding ProductsCount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                 FontSize="20"/>
             <TextBlock 
                 Grid.Column="2"

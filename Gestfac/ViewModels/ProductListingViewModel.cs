@@ -26,7 +26,6 @@ namespace Gestfac.ViewModels
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
                 FindCommand.Execute(null);
-                OnPropertyChanged(nameof(ProductsCount));
             }
         }
 
